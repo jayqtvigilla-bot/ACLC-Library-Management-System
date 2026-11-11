@@ -1,0 +1,3 @@
+:root { font-family:Inter, "Segoe UI", system-ui, -apple-system, sans-serif; color:#172B3A; background:#F4F7FA; font-synthesis:none; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+html { background:#F4F7FA; }
+body { margin:0; min-width:320px; min-height:100vh; }

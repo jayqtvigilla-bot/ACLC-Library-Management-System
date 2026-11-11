@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "479254897606",
+    "project_id": "aclc-library-capstone",
+    "storage_bucket": "aclc-library-capstone.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479254897606:android:aa4c760bad9b807c7708c7",
+        "android_client_info": {
+          "package_name": "ACLC.COM"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479254897606-qg9v6tc63cbp87jue60vq9u3fel2r37s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqCJ5MDTnHkWJp-MHr1DyNBhR85h1ggcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479254897606-qg9v6tc63cbp87jue60vq9u3fel2r37s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

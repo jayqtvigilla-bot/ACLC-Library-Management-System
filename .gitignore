@@ -1,0 +1,62 @@
+# Dependencies and generated build output
+node_modules/
+**/node_modules/
+**/build/
+**/.dart_tool/
+**/.gradle/
+**/.kotlin/
+.gradle-ota/
+web-dashboard/dist/
+
+# Local environment files. Keep the safe example template tracked.
+.env
+.env.*
+!.env.example
+
+# Local databases, SQLite sidecars, and database backups
+*.db
+*.db-*
+*.db.*
+*.sqlite
+*.sqlite-*
+*.sqlite.*
+*.sqlite3
+*.sqlite3-*
+*.sqlite3.*
+*.bak
+*.backup
+*.dump
+**/database-backups/
+**/db-backups/
+
+# Private credentials and service-account keys
+secrets/
+**/secrets/
+**/*firebase-admin*.json
+**/*service-account*.json
+**/*serviceAccount*.json
+**/*credentials*.json
+credentials.json
+secret.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Android signing material
+**/key.properties
+*.jks
+*.keystore
+
+# Local packages, logs, crash reports, and editor temporary files
+*.apk
+*.aab
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+**/hs_err_pid*.log
+**/replay_pid*.log
+Thumbs.db
+.DS_Store

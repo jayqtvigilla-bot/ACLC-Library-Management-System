@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b56">
+  <title>ACLC Smart Library | System Guide and ChatGPT Handoff</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: #f2f6f8;
+      color: #172b3a;
+      --navy: #123b56;
+      --teal: #13758a;
+      --gold: #f5a000;
+      --muted: #526a78;
+      --line: #dce6ea;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 30px 18px 48px; }
+    main { width: min(1040px, 100%); margin: 0 auto; }
+    header {
+      padding: clamp(24px, 5vw, 42px);
+      border-radius: 24px;
+      color: white;
+      background: radial-gradient(circle at 90% 15%, #ffffff20 0 12%, transparent 12.5%), linear-gradient(125deg, var(--navy), var(--teal));
+      box-shadow: 0 16px 38px #123b5628;
+    }
+    .eyebrow { margin: 0 0 9px; color: #d9f0f2; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0 0 12px; font-size: clamp(1.65rem, 5vw, 2.55rem); line-height: 1.1; }
+    header p { max-width: 760px; margin: 0; color: #e4f3f5; line-height: 1.65; }
+    section { margin-top: 18px; padding: clamp(18px, 4vw, 28px); border: 1px solid var(--line); border-radius: 20px; background: white; box-shadow: 0 8px 24px #123b5610; }
+    h2 { margin: 0; font-size: 1.12rem; }
+    h3 { margin: 20px 0 8px; font-size: .98rem; }
+    p, li { line-height: 1.62; }
+    p { color: #344e5d; }
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+    button { min-height: 46px; padding: 0 18px; border: 0; border-radius: 12px; color: white; background: var(--navy); font: inherit; font-weight: 750; cursor: pointer; transition: background .18s ease, transform .18s ease; }
+    button:hover { background: var(--teal); transform: translateY(-1px); }
+    button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    #status { min-height: 1.5em; margin: 8px 2px 0; color: var(--teal); font-size: .92rem; }
+    textarea { display: block; width: 100%; min-height: 72vh; padding: 18px; resize: vertical; border: 1px solid #cddde3; border-radius: 14px; background: #fbfdfe; color: #203747; font: 13px/1.65 Consolas, "Courier New", monospace; }
+    .hint { margin: 0 0 12px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .card { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: #fbfdfe; }
+    .card strong { display: block; margin-bottom: 5px; color: var(--navy); }
+    .card p { margin: 0; font-size: .93rem; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 999px; background: #fff4d9; color: #7a5200; font-size: .82rem; font-weight: 800; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    code { padding: 2px 5px; border-radius: 5px; background: #edf3f5; color: #123b56; overflow-wrap: anywhere; }
+    .callout { padding: 14px 16px; border-left: 4px solid var(--gold); border-radius: 8px; background: #fffaf0; }
+    .callout p { margin: 0; }
+    @media (max-width: 650px) {
+      body { padding: 14px 10px 30px; }
+      header, section { border-radius: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      textarea { min-height: 75vh; font-size: 12px; }
+      .bar button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">ACLC College · Mandaue</p>
+    <h1>Smart Library system guide</h1>
+    <p>This page explains how the current mobile app, API, database, Firebase services, and dashboard fit together. The full copy-ready handoff below gives another ChatGPT conversation enough context to continue work safely in this existing project.</p>
+  </header>
+
+  <section aria-labelledby="status-title">
+    <div class="bar">
+      <h2 id="status-title">Current verified state</h2>
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Local debug build; production setup incomplete</span>
+    </div>
+    <div class="grid">
+      <article class="card"><strong>Mobile app</strong><p>Flutter Android app rebuilt and installed on the connected TECNO phone. The checked build points to the local API through USB debugging. It is a debug build, not a Play Store release.</p></article>
+      <article class="card"><strong>API and SQLite</strong><p>Node/Express runs locally on port 3001. SQLite is reachable. Phone testing needs the computer running and <code>adb reverse tcp:3001 tcp:3001</code> active.</p></article>
+      <article class="card"><strong>Health check</strong><p>The local health endpoint returned HTTP 503 because required production services are not configured in the safe running process. This is a deliberate not-ready result, not a successful production health check.</p></article>
+      <article class="card"><strong>Authentication blocker</strong><p>The SQLite administrator account shown in testing is not linked to a Firebase Auth UID. Firebase Admin credentials and Gmail delivery must be configured securely before registration, account sync, approval, or reset email can be fully tested.</p></article>
+    </div>
+    <div class="callout" style="margin-top:14px"><p><strong>Security:</strong> a Firebase Admin private key was pasted into an earlier chat. Revoke that key in Google Cloud IAM and replace it with a new server-only credential. Do not copy any secret into this page or another chat.</p></div>
+  </section>
+
+  <section aria-labelledby="system-title">
+    <h2 id="system-title">How the system works</h2>
+    <div class="grid">
+      <article class="card"><strong>1. Flutter Android app</strong><p><code>mobile_app/lib/main.dart</code> contains most mobile screens, navigation, state, and API calls. The API address is compiled into the build as <code>API_BASE_URL</code>. The app uses secure storage for the signed-in session.</p></article>
+      <article class="card"><strong>2. Express API</strong><p><code>server.js</code> is the trusted service. It checks sessions and roles, applies library rules, reads/writes SQLite, and talks to Firebase Admin when configured. Mobile and dashboard requests go to <code>/api</code>.</p></article>
+      <article class="card"><strong>3. SQLite</strong><p>The local <code>aclc_library.sqlite</code> file holds operational library records such as books, copies, reservations, loans, returns, gate events, and audit history. Production needs durable persistent storage and backups.</p></article>
+      <article class="card"><strong>4. Firebase Auth and Firestore</strong><p>Firebase Authentication is the account identity provider. Firestore stores a synchronized user profile at <code>users/{uid}</code>. A server-only Firebase Admin credential links/synchronizes users; the Android JSON is public client configuration, not an API server address or admin key.</p></article>
+      <article class="card"><strong>5. React administrator dashboard</strong><p><code>web-dashboard/src/App.jsx</code> contains dashboard screens and workflows. It calls the same Express API; it does not bypass server authorization or write directly to SQLite.</p></article>
+      <article class="card"><strong>6. Email, gate, and LIRA</strong><p>Gmail SMTP sends verification/approval/reset messages. Gate endpoints issue short-lived authorization nonces and expect an authenticated device. <code>lira-ai.js</code> handles optional AI responses with a server-side key and safe local fallbacks.</p></article>
+    </div>
+    <h3>Account flow</h3>
+    <p>A student or teacher registers, verifies email with a six-digit code, then waits in the administrator approval queue. Approval activates the account and its library ID/QR. Firebase Auth, Firestore, and SQLite identity records are intended to stay linked. Pending or rejected accounts must not borrow books or use entrance features. Public users cannot grant themselves staff or administrator roles.</p>
+    <h3>Library flow</h3>
+    <p>Book search, inventory, reservations, checkouts, returns, penalties, payments, notifications, reports, QR credentials, and access logs are handled by API routes and stored operationally in SQLite. The backend, not only the UI, must enforce borrowing limits and role permissions.</p>
+  </section>
+
+  <section aria-labelledby="files-title">
+    <h2 id="files-title">Important file map</h2>
+    <div class="grid">
+      <article class="card"><strong><code>server.js</code></strong><p>Express app, API routes, SQLite setup/migrations, auth and role checks, Firebase/email integration, admin bootstrap, and API startup. In test mode it skips loading local .env secrets.</p></article>
+      <article class="card"><strong><code>lib/firebase-account-reconcile.js</code> and <code>scripts/link-existing-firebase-accounts.js</code></strong><p>Safe legacy account reconciliation. It defaults to dry-run, requires a fresh Firebase Admin credential path outside the repository to apply, matches verified emails exactly, refuses role mismatches and UID conflicts, and links Firebase Auth UID, Firestore profile, and SQLite.</p></article>
+      <article class="card"><strong><code>migrations/001_initial.sql</code> through <code>007_book_cover_url.sql</code></strong><p>Ordered SQLite schema changes. Do not edit production schema casually; back up data and add a new migration for future schema changes.</p></article>
+      <article class="card"><strong><code>lira-ai.js</code></strong><p>Optional LIRA provider integration and local fallback behavior. Provider credentials belong on the server only.</p></article>
+      <article class="card"><strong><code>test/</code></strong><p><code>run-api-tests.js</code> launches tests against an isolated temporary database; API, circulation/gate, LIRA, and Firebase account reconciliation tests live beside it. Tests skip local .env to avoid touching live services.</p></article>
+      <article class="card"><strong><code>mobile_app/lib/main.dart</code></strong><p>Main Flutter UI and mobile workflows. The mobile project also has <code>pubspec.yaml</code>/<code>pubspec.lock</code>, image assets, Android Gradle config, manifest, and Kotlin <code>MainActivity.kt</code>.</p></article>
+      <article class="card"><strong><code>mobile_app/android/app/google-services.json</code></strong><p>Firebase Android client setup for the ACLC Firebase project and Android package. It is not secret, but must match the Firebase app/package registration.</p></article>
+      <article class="card"><strong><code>web-dashboard/src/App.jsx</code></strong><p>React dashboard pages and actions. <code>main.jsx</code> starts React; <code>App.css</code> and <code>index.css</code> define dashboard styling.</p></article>
+      <article class="card"><strong><code>package.json</code> and lockfile</strong><p>Backend dependencies and commands. <code>npm start</code> starts the API; <code>npm test</code> runs automated backend tests. The dashboard has its own package files.</p></article>
+      <article class="card"><strong><code>.env</code> and <code>.env.example</code></strong><p><code>.env</code> contains local secrets and is ignored by Git. <code>.env.example</code> documents variable names and safe placeholders. Never paste or commit the real file.</p></article>
+      <article class="card"><strong><code>render.yaml</code></strong><p>Render deployment blueprint for the Express service, persistent SQLite disk, health path, and production environment variable names. A blueprint does not mean a live service exists.</p></article>
+      <article class="card"><strong>System documents</strong><p><code>README.md</code>, <code>SYSTEM_ARCHITECTURE.md</code>, <code>API_DOCUMENTATION.md</code>, <code>DATABASE_DESIGN.md</code>, <code>HARDWARE_INTEGRATION.md</code>, <code>TESTING_PLAN.md</code>, and <code>DEVELOPMENT_PLAN.md</code> explain setup, data, APIs, hardware limits, tests, and roadmap.</p></article>
+      <article class="card"><strong>Secrets and generated files</strong><p><code>mobile_app/android/key.properties</code>, keystore files, local SQLite databases, build output, and node modules are local/generated/private data. Keep them out of shared prompts and source control.</p></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="handoff-title">
+    <div class="bar">
+      <h2 id="handoff-title">Copy-ready prompt for ChatGPT</h2>
+      <button id="copy" type="button">Copy full system handoff</button>
+    </div>
+    <p class="hint">The text includes system architecture, file explanations, verified test results, current blockers, and safe instructions to continue. It contains no passwords, API keys, service-account JSON, or other credentials.</p>
+    <p id="status" role="status" aria-live="polite"></p>
+    <textarea id="prompt" readonly spellcheck="false" aria-label="Full ACLC Smart Library system handoff prompt">You are helping me continue and prepare my EXISTING ACLC Smart Library project for a real production release. Inspect the live workspace before changing code. Do not create a new app or replace existing workflows with a demo. Make concrete changes, run relevant checks, and explain outcomes in clear, simple language. Never claim a feature is bug-free or production-ready without evidence.
+
+PROJECT LOCATION AND PURPOSE
+- Workspace: D:\xampp\htdocs\capstone
+- Product: ACLC College Mandaue Smart Library, Android-first, with student/teacher mobile workflows and administrator/librarian dashboard workflows.
+- Goal: secure production deployment and Play Store release after end-to-end functionality is verified. I want to understand the system and have exact next steps.
+
+SYSTEM ARCHITECTURE
+- Android app: Flutter in mobile_app/. Most UI, navigation, state, authentication screens, and API calls are in mobile_app/lib/main.dart. API_BASE_URL is compiled into each build using --dart-define. Android project configuration is under mobile_app/android/; pubspec.yaml and pubspec.lock define Flutter dependencies/assets. google-services.json is public Firebase Android client configuration for project aclc-library-capstone and package ACLC.COM; it is not a server URL or private Firebase Admin credential.
+- Backend: Node.js/Express in server.js. It exposes /api routes, validates auth/roles, applies business rules, accesses SQLite, and uses Firebase Admin and Gmail only when correctly configured. package.json and package-lock.json describe backend dependencies and scripts. npm start runs the API; npm test runs the isolated backend suite.
+- Database: SQLite is the operational library database. aclc_library.sqlite is the local DB; migrations/001_initial.sql through 007_book_cover_url.sql create/evolve schema. Account identity/profile data is intended to be synchronized across SQLite, Firebase Authentication, and Firestore users/{uid}. Catalog, circulation, penalties, access events, audit and other transactional records live in SQLite. Production requires persistent storage, backups, and restoration procedures.
+- Staff/admin dashboard: React + Vite under web-dashboard/. Main pages/actions are in src/App.jsx, startup in src/main.jsx, styling in App.css/index.css. It calls the same Express API.
+- LIRA: lira-ai.js contains optional AI/server fallback logic; OPENAI_API_KEY must stay server-side.
+- Hardware: HARDWARE_INTEGRATION.md and /api/gates routes describe the proposed ESP32 gate API, but the repository has no ESP32 firmware or physical turnstile implementation. Current gate tests simulate software requests only; they do not prove motors, scanner direction, encoders, outage safety or emergency egress.
+- Deployment: render.yaml describes a possible Render service and persistent disk. It does not mean a service is deployed. Never invent an API URL. Production Android requires the actual deployed HTTPS API origin compiled as API_BASE_URL.
+
+IMPORTANT FILE GUIDE
+- server.js: API startup, routes, schema initialization, admin bootstrap, auth, authorization, Firebase/Gmail integration, business logic. Trace this before duplicating backend functions.
+- migrations/*.sql: ordered schema changes. Back up real data before risky changes; add a new migration instead of silently rewriting an already-deployed migration.
+- test/run-api-tests.js: starts API tests using a temporary isolated SQLite database and port, then cleans up.
+- test/api.test.js: auth/registration/approval and API behavior tests.
+- test/circulation.test.js: reservations, circulation and gate nonce behavior tests.
+- test/lira-ai.test.js and lira-ai.js: assistant fallback/provider behavior.
+- mobile_app/lib/main.dart: Flutter screens, navigation and client-side workflows. Keep backend security authoritative; UI hiding is not access control.
+- mobile_app/android/app/google-services.json: Firebase client setup; check its package/project match. Never confuse it with Firebase Admin credentials or the Express address.
+- mobile_app/android/app/build.gradle.kts, AndroidManifest.xml and MainActivity.kt: app ID, Android build/signing setup, permissions and native Android integrations.
+- mobile_app/pubspec.yaml/pubspec.lock: Flutter deps/assets.
+- web-dashboard/src/App.jsx, src/main.jsx, src/App.css, src/index.css: dashboard UI, entry point and styles.
+- web-dashboard/package.json and package-lock.json: dashboard dependencies and lint/build scripts.
+- .env: ignored local secrets/settings; never read its contents into chat, print values, or commit it.
+- .env.example: variable-name/template reference with placeholders only.
+- package.json/package-lock.json: backend dependencies and scripts.
+- render.yaml: deployment blueprint and environment variable declarations.
+- README.md: project setup, local run, Firebase setup and deployment instructions.
+- SYSTEM_ARCHITECTURE.md: component boundaries and security model.
+- API_DOCUMENTATION.md: available endpoints and expected workflows; verify claims against server.js.
+- DATABASE_DESIGN.md: tables and data relationships.
+- HARDWARE_INTEGRATION.md: gate API assumptions and safety limitations.
+- TESTING_PLAN.md: automated/manual acceptance coverage.
+- DEVELOPMENT_PLAN.md: feature roadmap.
+- PROJECT_HANDOFF.html: this explanation and copy button.
+- .gitignore: excludes local secrets, SQLite DBs, build outputs, and signing files; verify before release.
+
+HOW DATA AND AUTH WORK
+1. Flutter sends sign-up/sign-in/library requests to the Express API over API_BASE_URL.
+2. Public registration is for student/teacher only. Registration uses email verification (OTP flow where configured), then waits for administrator approval. Pending/declined/suspended users must not use borrowing or access features.
+3. Firebase Authentication supplies account identity; Firestore stores the user profile mirror under users/{uid}; SQLite stores the library account link and operational data. Firebase Admin SDK is trusted server-side only. Sensitive changes must fail safely if required systems are unavailable.
+4. Admin approval activates the account and QR/digital ID according to the server workflow. Admin/librarian roles must only be granted by authorized trusted server actions.
+5. Operational workflows include catalog/books/copies, reservations, checkout/loans, returns, damage/penalty/payment records, user history, notifications, reports, QR credential replacement/validation, and entrance/exit logs. Check server rules and DB transactions, not only screen appearance.
+6. LIRA supports role-aware library/help answers; user-specific answers/history must remain scoped to the authenticated user. AI keys and provider calls stay in the backend.
+
+API CONNECTION FACT
+Firebase Android config is not an Express server. A local USB build uses:
+  adb reverse tcp:3001 tcp:3001
+  flutter build apk --debug --dart-define=API_BASE_URL=http://127.0.0.1:3001/api
+The API must be running on the computer and the USB reverse tunnel active. A production Play Store build must use the real deployed HTTPS URL, for example:
+  flutter build appbundle --release --dart-define=API_BASE_URL=https://<actual-api-host>/api
+Replace the placeholder only after confirming the deployed service. Do not use Firebase Hosting as the API unless an API is actually deployed there.
+
+CURRENT KNOWN STATE (from the last documented local checks; recheck before relying on it)
+- The TECNO phone is connected and still has package `ACLC.COM` installed. The latest debug APK built in this workspace has no API_BASE_URL configured, so it is not ready for sign-in testing. Do not reinstall it until a reachable API origin is configured.
+- npm test passed 13 tests against an isolated temporary SQLite DB. flutter analyze passed; one Flutter widget test passed. Dashboard lint and Vite production build passed. npm audit --omit=dev reported 0 vulnerabilities after dependency overrides. A debug APK build succeeded; it is not a signed release artifact.
+- Local account data was explicitly reset on 2026-11-10 after creating a protected backup outside the repository. The active SQLite DB now has one approved, email-verified administrator account for the confirmed `jayknightvigilla@gmail.com` address; it has no Firebase UID yet. The configured Firebase credential path is disabled pending key rotation. The catalog currently has zero books/copies.
+- The local API is not currently running. Before account reset, its health endpoint returned HTTP 503 with SQLite true, Firebase Admin false, email false, and gate-device authentication false. Firebase Admin remains intentionally disabled until a newly rotated key is installed; do not use the exposed key.
+- The server’s .env references a Firebase credential path. A full Firebase Admin private key was pasted in an earlier conversation and must be considered compromised. Revoke/delete that key in Google Cloud IAM, generate a fresh credential, and store it only as a backend secret. Do not read, print, copy, upload, or use the old key. Never ask me to paste any secret into chat.
+- `npm run firebase:link-users` performs a dry-run by default. Only after revoking the exposed key and creating a fresh key outside this repo, set `$env:FIREBASE_LINK_CREDENTIALS_FILE` to that new file and review the preview. Apply with `npm run firebase:link-users -- --apply`. This links exact, already verified email matches only; it does not create accounts or change passwords/roles. The configured admin-email mismatch must be resolved before linking the account intended to be administrator. Do not use the exposed key. The current local process has Firebase Admin disabled.
+- Gmail SMTP is not configured in the local environment, so registration/approval/reset messages cannot be verified. Firebase password reset needs Firebase Auth/Admin setup and email delivery.
+- `ADMIN_EMAIL` in local `.env` now matches `jayknightvigilla@gmail.com`; the configured password is retained locally and never printed. When fresh Firebase Admin credentials are configured, server startup will create or link this account in Firebase Auth/Firestore and save its UID in SQLite.
+- No deployed HTTPS API URL, live Render health, fresh Firebase sync, email delivery, production signing key, or physical gate commissioning has been proven. The active SQLite DB was cleared of old accounts; SQLite catalog and copy tables were already empty. A debug APK builds but needs a real API origin and has not been reinstalled in this last turn. Do not reveal or repeat any previously shared password.
+- Gate device token is not configured. No physical gate/ESP32 is in this repository. Treat passage tests as API simulation only.
+
+PRODUCTION WORK REQUIRED
+1. Inspect current files and instructions, then trace the login request from Flutter through API authorization, SQLite account UID, Firebase Auth, and Firestore. Report the exact root cause in non-secret terms.
+2. Ensure old exposed Firebase Admin key is revoked. Guide me to store a fresh service account securely in the backend environment only. Never print or ask for secret values.
+3. Resolve the admin email spelling with me. Resolve the admin email spelling and ensure the intended SQLite record already has the administrator role. Then review the reconciliation dry-run and link exact verified accounts using the fresh server-only credential; do not put passwords in UID fields, change roles implicitly, or grant admin role from mobile.
+4. Configure Gmail App Password securely in backend settings; verify OTP, approval/rejection messages, and Firebase password-reset links. Do not send reset links to an account without Firebase ownership.
+5. Deploy or verify the API at a real HTTPS URL with persistent SQLite disk, backups, startup migrations, CORS, rate limits, JWT secret, health checks, and required server-only Firebase/email/gate settings. Do not invent a URL and do not report a blueprint as a deployment.
+6. Review all roles and critical user workflows. Check authorization at server route level, transaction consistency, duplicate prevention, QR expiration/revocation, student three-book cap and teacher limits, returns, penalties, approval/rejection, archives/removal, notifications, and audit logs.
+7. Verify Firestore security rules are restrictive and no client can grant roles. Review input validation, SQL parameters, upload handling, CORS, secrets, password reset, rate limiting, Firebase partial-failure handling, backups and account deletion/retention.
+8. Review all screens and buttons in mobile and dashboard, including loading/error/empty states and role navigation. Preserve working ACLC styling and functions; do not use placeholder/mock data to conceal missing services.
+9. Build a visibly labeled SIMULATED gate workflow only if useful, separate from the real device API. Never claim physical hardware functionality without commissioning and safe emergency-egress tests.
+10. Run formatting, backend tests, Flutter analysis/tests/build, dashboard lint/build, dependency audit, health checks, Firebase/email live checks, phone install/launch, and role-by-role manual acceptance as access allows. Distinguish automated tests from real external/live/device checks.
+11. Configure Play Store release signing securely, inspect permissions and Play policy, build a signed Android App Bundle, then verify on the actual device and deployment. Do not call a debug APK a release.
+
+REQUIRED FINAL REPORT
+Use honest labels: COMPLETED AND TESTED; IMPLEMENTED BUT NOT LIVE-TESTED; PARTIALLY IMPLEMENTED; NOT IMPLEMENTED; BLOCKED BY EXTERNAL CONFIGURATION. Explain the whole system/file map in plain language. List actual files changed, root causes, tests and exact results, API/deployment status, Firebase/email status, device checks, and remaining release blockers. Give safe commands and exact one-time console steps. Never promise “no bugs”; say which risks remain and what evidence is still needed.
+
+Start by checking the current workspace and the running app/API state. Preserve existing project data and code. Do not expose secrets.</textarea>
+  </section>
+</main>
+<script>
+  const button = document.getElementById('copy');
+  const prompt = document.getElementById('prompt');
+  const status = document.getElementById('status');
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(prompt.value);
+      status.textContent = 'Copied the full project guide and handoff prompt.';
+    } catch (_) {
+      prompt.focus();
+      prompt.select();
+      const copied = document.execCommand('copy');
+      status.textContent = copied
+        ? 'Copied the full project guide and handoff prompt.'
+        : 'Text selected. Press Ctrl+C to copy it.';
+    }
+  });
+</script>
+</body>
+</html>

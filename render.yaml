@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: aclc-library-api
+    runtime: node
+    plan: starter
+    region: singapore
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.0.0
+      - key: DB_FILE
+        value: /var/data/aclc_library.sqlite
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://aclc.library.com,https://aclc-library-capstone.web.app,https://aclc-library-capstone.firebaseapp.com
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: GATE_DEVICE_TOKEN
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIRESTORE_DATABASE_ID
+        value: default
+      - key: FIREBASE_WEB_API_KEY
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: FIREBASE_ACCOUNT_SYNC_REQUIRED
+        value: "true"
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: LIRA_AI_MODEL
+        value: gpt-4o-mini
+    disk:
+      name: aclc-library-data
+      mountPath: /var/data
+      sizeGB: 1
